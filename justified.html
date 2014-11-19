@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<style>
+			.wrapper{
+				width: 100%;
+				height: auto;
+				position: relative;
+			}
+			.item{
+				height: 200px;
+				position: relative;
+				float: left;
+				/*border: 1px solid black;*/
+			}
+			.red{
+				background-color: red;
+			}
+			.green{
+				background-color: green;
+			}
+			.blue{
+				background-color: blue;
+			}
+			.type1{
+				width: 300px;
+			}
+			.type2{
+				width: 150px;
+			}
+		</style>
+		<script>
+			var color = ['red', 'green', 'blue'];
+			var type = ['type1', 'type2'];
+			var nodeList = [];
+			
+			window.onload = function(){
+				var wrapper = document.querySelector('.wrapper');
+				var num = 30;
+				var lineNumber = 1;
+				var line = [];
+				var blockWidth = wrapper.getBoundingClientRect().width;
+				while(num){
+					num--;
+					var div = document.createElement("div");
+					div.classList.add("item");
+					div.classList.add(color[Math.floor(Math.random() * 3)]);
+					div.classList.add(type[Math.floor(Math.random() * 2)]);
+					
+					nodeList.push(div);
+					wrapper.appendChild(div);
+					
+					if(nodeList.length > 1 && div.getBoundingClientRect().top !== nodeList[nodeList.length-2].getBoundingClientRect().top){
+						//console.log(line);
+						var lineWidth = line.reduce(function(a,b){
+							var val = typeof a !== 'number' ? a.getBoundingClientRect().width : a;
+							return val + b.getBoundingClientRect().width;
+						});
+						var incIndex = blockWidth/lineWidth;
+						line.forEach(function(div){
+							var width = div.getBoundingClientRect().width;
+							div.style.width = (width * incIndex) + 'px';
+						});
+						line = [];
+						lineNumber++;
+					}
+					div.classList.add('line' + lineNumber);
+					line.push(div);
+					//console.log(div.getBoundingClientRect().top);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div class = "wrapper">
+		</div>
+	</body>
+</html>
