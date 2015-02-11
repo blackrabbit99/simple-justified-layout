@@ -21,6 +21,21 @@
 			.blue{
 				background-color: blue;
 			}
+			.orange{
+				background-color: orange;
+			}
+			.yellow{
+				background-color: yellow;
+			}
+			.magenta{
+				background-color: magenta;
+			}
+			.black{
+				background-color: black;
+			}
+			.white{
+				background-color: white;
+			}
 			.type1{
 				width: 300px;
 			}
@@ -29,49 +44,68 @@
 			}
 		</style>
 		<script>
-			var color = ['red', 'green', 'blue'];
+			var color = ['red', 'green', 'blue', 'orange', 'yellow', 'magenta', 'black', 'white'];
 			var type = ['type1', 'type2'];
 			var nodeList = [];
 			
 			window.onload = function(){
 				var wrapper = document.querySelector('.wrapper');
-				var num = 30;
+				
 				var lineNumber = 1;
 				var line = [];
+				var lineWidth = 0;
+				//debugger;
 				var blockWidth = wrapper.getBoundingClientRect().width;
+				console.time('startRendering');
+				var div = document.querySelectorAll(".wrapper div");
+				var num = div.length;
+
 				while(num){
-					num--;
-					var div = document.createElement("div");
-					div.classList.add("item");
-					div.classList.add(color[Math.floor(Math.random() * 3)]);
-					div.classList.add(type[Math.floor(Math.random() * 2)]);
+					
+					
+					
 					
 					nodeList.push(div);
-					wrapper.appendChild(div);
 					
-					if(nodeList.length > 1 && div.getBoundingClientRect().top !== nodeList[nodeList.length-2].getBoundingClientRect().top){
-						//console.log(line);
-						var lineWidth = line.reduce(function(a,b){
-							var val = typeof a !== 'number' ? a.getBoundingClientRect().width : a;
-							return val + b.getBoundingClientRect().width;
-						});
+					var index = div.length-num;
+					num--;
+
+					var nodeObj = {
+						node: div[index],
+						coords: div[index].getBoundingClientRect()
+					};	
+					
+					
+					
+					if(line.length > 1 && nodeObj.coords.top !== line[line.length-2].coords.top){
+						lineWidth = 0;
+						for(var i = 0; i < line.length; i++){
+							lineWidth += line[i].coords.width;
+						}
+
 						var incIndex = blockWidth/lineWidth;
-						line.forEach(function(div){
-							var width = div.getBoundingClientRect().width;
-							div.style.width = (width * incIndex) + 'px';
-						});
-						line = [];
+
+						for(var i =0; i < line.length; i++){
+							var width = line[i].coords.width;
+							line[i].node.style.width = (width * incIndex) + 'px';
+						}
+
+						line.length = 0;
 						lineNumber++;
 					}
-					div.classList.add('line' + lineNumber);
-					line.push(div);
+					
+					div[index].classList.add('line' + lineNumber);
+					
+					line.push(nodeObj);
 					//console.log(div.getBoundingClientRect().top);
 				}
+				console.timeEnd('startRendering');
 			}
 		</script>
 	</head>
 	<body>
 		<div class = "wrapper">
+			<div class="item magenta type1 line1"></div><div class="item red type2 line1"></div><div class="item magenta type1 line1"></div><div class="item magenta type1 line1"></div><div class="item yellow type1 line2"></div><div class="item yellow type1 line2"></div><div class="item yellow type2 line2"></div><div class="item magenta type1 line2"></div><div class="item blue type1 line3"></div><div class="item red type2 line3"></div><div class="item blue type2 line3"></div><div class="item orange type2 line3"></div><div class="item black type1 line3"></div><div class="item orange type1 line4"></div><div class="item red type1 line4"></div><div class="item blue type1 line4"></div><div class="item orange type1 line4"></div><div class="item magenta type1 line5"></div><div class="item black type1 line5"></div><div class="item blue type2 line5"></div><div class="item white type2 line5"></div><div class="item magenta type2 line5"></div><div class="item magenta type2 line5"></div><div class="item magenta type1 line6"></div><div class="item red type2 line6"></div><div class="item magenta type1 line6"></div><div class="item white type2 line6"></div><div class="item magenta type1 line6"></div><div class="item black type1 line7"></div><div class="item magenta type2 line7"></div><div class="item magenta type1 line7"></div><div class="item yellow type1 line7"></div><div class="item white type2 line7"></div><div class="item blue type1 line8"></div><div class="item white type1 line8"></div><div class="item black type2 line8"></div><div class="item white type1 line8"></div><div class="item magenta type2 line8"></div><div class="item black type2 line9"></div><div class="item yellow type1 line9"></div><div class="item black type2 line9"></div><div class="item red type2 line9"></div><div class="item orange type2 line9"></div><div class="item yellow type2 line9"></div><div class="item magenta type1 line10"></div><div class="item magenta type2 line10"></div><div class="item magenta type1 line10"></div><div class="item green type2 line10"></div><div class="item red type1 line10"></div><div class="item black type1 line11"></div><div class="item yellow type1 line11"></div><div class="item red type2 line11"></div><div class="item black type2 line11"></div><div class="item orange type1 line11"></div><div class="item blue type1 line12"></div><div class="item blue type2 line12"></div><div class="item blue type2 line12"></div><div class="item white type2 line12"></div><div class="item green type1 line12"></div><div class="item magenta type2 line12"></div><div class="item black type2 line13"></div><div class="item white type1 line13"></div><div class="item white type1 line13"></div><div class="item yellow type2 line13"></div><div class="item magenta type2 line13"></div><div class="item yellow type2 line13"></div><div class="item orange type2 line14"></div><div class="item yellow type2 line14"></div><div class="item black type2 line14"></div><div class="item red type2 line14"></div><div class="item yellow type2 line14"></div><div class="item orange type1 line14"></div><div class="item yellow type1 line15"></div><div class="item blue type2 line15"></div><div class="item black type2 line15"></div><div class="item magenta type1 line15"></div><div class="item yellow type2 line15"></div><div class="item blue type1 line16"></div><div class="item magenta type1 line16"></div><div class="item white type2 line16"></div><div class="item magenta type1 line16"></div><div class="item green type2 line16"></div><div class="item yellow type2 line17"></div><div class="item orange type2 line17"></div><div class="item white type1 line17"></div><div class="item orange type1 line17"></div><div class="item red type2 line17"></div><div class="item orange type2 line17"></div><div class="item black type2 line18"></div><div class="item black type2 line18"></div><div class="item green type1 line18"></div><div class="item black type1 line18"></div><div class="item red type1 line18"></div><div class="item orange type2 line19"></div><div class="item red type2 line19"></div><div class="item yellow type2 line19"></div><div class="item green type1 line19"></div><div class="item blue type2 line19"></div><div class="item magenta type1 line19"></div><div class="item blue type2 line20"></div><div class="item yellow type1 line20"></div><div class="item green type2 line20"></div><div class="item white type1 line20"></div><div class="item black type1 line20"></div><div class="item black type1 line21"></div><div class="item blue type2 line21"></div><div class="item white type1 line21"></div><div class="item yellow type1 line21"></div><div class="item orange type2 line21"></div><div class="item blue type1 line22"></div><div class="item orange type2 line22"></div><div class="item yellow type2 line22"></div><div class="item orange type2 line22"></div><div class="item green type2 line22"></div><div class="item blue type1 line22"></div><div class="item yellow type1 line23"></div><div class="item green type1 line23"></div><div class="item red type2 line23"></div><div class="item red type1 line23"></div><div class="item white type2 line23"></div><div class="item black type1 line24"></div><div class="item green type1 line24"></div><div class="item yellow type1 line24"></div><div class="item red type1 line24"></div><div class="item black type2 line25"></div><div class="item black type2 line25"></div><div class="item white type2 line25"></div><div class="item yellow type1 line25"></div><div class="item green type2 line25"></div><div class="item orange type2 line25"></div><div class="item magenta type2 line25"></div><div class="item red type1 line26"></div><div class="item yellow type2 line26"></div><div class="item orange type1 line26"></div><div class="item green type1 line26"></div><div class="item blue type1 line27"></div><div class="item orange type1 line27"></div><div class="item yellow type1 line27"></div><div class="item orange type2 line27"></div><div class="item black type1 line28"></div><div class="item red type1 line28"></div><div class="item green type2 line28"></div><div class="item blue type2 line28"></div><div class="item yellow type1 line28"></div><div class="item white type1 line29"></div><div class="item green type1 line29"></div><div class="item magenta type1 line29"></div><div class="item blue type2 line29"></div><div class="item magenta type1 line30"></div><div class="item magenta type2 line30"></div><div class="item red type1 line30"></div><div class="item magenta type2 line30"></div><div class="item orange type1 line30"></div><div class="item white type1 line31"></div><div class="item magenta type1 line31"></div><div class="item orange type1 line31"></div><div class="item orange type2 line31"></div><div class="item yellow type1 line32"></div><div class="item black type1 line32"></div><div class="item yellow type1 line32"></div><div class="item white type2 line32"></div><div class="item green type2 line32"></div><div class="item white type2 line33"></div><div class="item red type1 line33"></div><div class="item yellow type1 line33"></div><div class="item yellow type1 line33"></div><div class="item orange type2 line33"></div><div class="item yellow type2 line34"></div><div class="item green type2 line34"></div><div class="item red type2 line34"></div><div class="item blue type1 line34"></div><div class="item orange type1 line34"></div><div class="item yellow type2 line34"></div><div class="item black type2 line35"></div><div class="item magenta type1 line35"></div><div class="item blue type2 line35"></div><div class="item black type2 line35"></div><div class="item magenta type1 line35"></div><div class="item magenta type2 line35"></div><div class="item green type1 line36"></div><div class="item red type1 line36"></div><div class="item red type1 line36"></div><div class="item white type2 line36"></div><div class="item magenta type2 line36"></div><div class="item black type1 line37"></div><div class="item blue type1 line37"></div><div class="item magenta type1 line37"></div><div class="item red type2 line37"></div><div class="item green type1 line38"></div><div class="item blue type2 line38"></div><div class="item green type1 line38"></div><div class="item magenta type1 line38"></div><div class="item blue type2 line38"></div><div class="item white type2 line39"></div><div class="item magenta type2 line39"></div><div class="item green type2 line39"></div><div class="item white type1 line39"></div><div class="item white type1 line39"></div><div class="item white type1 line40"></div><div class="item red type2 line40"></div><div class="item orange type2 line40"></div><div class="item magenta type1 line40"></div><div class="item yellow type1 line40"></div><div class="item black type1 line41"></div><div class="item white type2 line41"></div><div class="item orange type1 line41"></div><div class="item green type1 line41"></div><div class="item yellow type2 line41"></div><div class="item white type2 line42"></div><div class="item magenta type1 line42"></div><div class="item blue type1 line42"></div><div class="item green type2 line42"></div><div class="item yellow type1 line42"></div><div class="item yellow type2 line43"></div><div class="item blue type2 line43"></div><div class="item magenta type1 line43"></div><div class="item white type2 line43"></div><div class="item orange type1 line43"></div><div class="item magenta type2 line43"></div><div class="item green type2 line44"></div><div class="item blue type2 line44"></div><div class="item white type2 line44"></div><div class="item orange type1 line44"></div><div class="item black type1 line44"></div><div class="item blue type2 line44"></div><div class="item yellow type1 line45"></div><div class="item white type1 line45"></div><div class="item white type2 line45"></div><div class="item red type1 line45"></div><div class="item white type2 line45"></div><div class="item black type1 line46"></div><div class="item magenta type1 line46"></div><div class="item black type1 line46"></div><div class="item black type1 line46"></div><div class="item magenta type1 line47"></div><div class="item white type1 line47"></div><div class="item blue type1 line47"></div><div class="item yellow type2 line47"></div><div class="item blue type1 line48"></div><div class="item blue type2 line48"></div><div class="item magenta type1 line48"></div><div class="item white type2 line48"></div><div class="item white type2 line48"></div><div class="item white type2 line48"></div><div class="item orange type1 line49"></div><div class="item magenta type2 line49"></div><div class="item yellow type1 line49"></div><div class="item black type2 line49"></div><div class="item white type1 line49"></div><div class="item green type2 line50"></div><div class="item black type1 line50"></div><div class="item magenta type2 line50"></div><div class="item red type1 line50"></div><div class="item magenta type2 line50"></div><div class="item white type2 line50"></div><div class="item red type2 line51"></div><div class="item black type2 line51"></div><div class="item magenta type2 line51"></div><div class="item orange type1 line51"></div><div class="item white type2 line51"></div><div class="item orange type2 line51"></div><div class="item green type2 line51"></div><div class="item blue type1 line52"></div><div class="item blue type1 line52"></div><div class="item orange type2 line52"></div><div class="item orange type1 line52"></div><div class="item green type1 line53"></div><div class="item blue type1 line53"></div><div class="item magenta type1 line53"></div><div class="item black type2 line53"></div><div class="item orange type1 line54"></div><div class="item green type2 line54"></div><div class="item black type1 line54"></div><div class="item black type1 line54"></div><div class="item blue type1 line55"></div><div class="item white type2 line55"></div><div class="item red type1 line55"></div><div class="item green type1 line55"></div><div class="item green type1 line56"></div><div class="item orange type2 line56"></div><div class="item magenta type2 line56"></div><div class="item red type2 line56"></div><div class="item white type1 line56"></div><div class="item black type1 line57"></div><div class="item magenta type2 line57"></div><div class="item green type1 line57"></div><div class="item magenta type2 line57"></div><div class="item green type2 line57"></div><div class="item blue type2 line57"></div><div class="item yellow type2 line58"></div><div class="item white type1 line58"></div><div class="item yellow type2 line58"></div><div class="item green type1 line58"></div><div class="item black type1 line58"></div><div class="item red type1 line59"></div><div class="item white type2 line59"></div><div class="item magenta type1 line59"></div><div class="item green type2 line59"></div><div class="item blue type1 line59"></div><div class="item green type1 line60"></div><div class="item white type2 line60"></div><div class="item white type1 line60"></div><div class="item blue type2 line60"></div><div class="item red type1 line60"></div><div class="item black type2 line61"></div><div class="item blue type1 line61"></div><div class="item red type1 line61"></div><div class="item orange type2 line61"></div><div class="item orange type1 line61"></div><div class="item blue type1 line62"></div><div class="item red type2 line62"></div><div class="item magenta type1 line62"></div><div class="item black type2 line62"></div><div class="item yellow type2 line62"></div><div class="item yellow type2 line62"></div><div class="item orange type2 line63"></div><div class="item blue type2 line63"></div><div class="item white type1 line63"></div><div class="item yellow type1 line63"></div><div class="item red type1 line63"></div><div class="item black type1 line64"></div><div class="item white type1 line64"></div><div class="item red type1 line64"></div><div class="item white type1 line64"></div><div class="item magenta type1 line65"></div><div class="item yellow type1 line65"></div><div class="item magenta type2 line65"></div><div class="item black type2 line65"></div><div class="item red type2 line65"></div><div class="item yellow type2 line65"></div><div class="item white type1 line66"></div><div class="item green type2 line66"></div><div class="item blue type1 line66"></div><div class="item orange type2 line66"></div><div class="item green type1 line66"></div><div class="item orange type1 line67"></div><div class="item green type2 line67"></div><div class="item magenta type2 line67"></div><div class="item white type2 line67"></div><div class="item green type2 line67"></div><div class="item yellow type1 line67"></div><div class="item magenta type2 line68"></div><div class="item green type1 line68"></div><div class="item magenta type2 line68"></div><div class="item black type2 line68"></div><div class="item yellow type1 line68"></div><div class="item blue type2 line68"></div><div class="item green type2 line69"></div><div class="item yellow type2 line69"></div><div class="item green type2 line69"></div><div class="item white type1 line69"></div><div class="item blue type2 line69"></div><div class="item orange type1 line69"></div><div class="item white type1 line70"></div><div class="item orange type2 line70"></div><div class="item red type2 line70"></div><div class="item magenta type2 line70"></div><div class="item white type1 line70"></div><div class="item green type1 line71"></div><div class="item green type1 line71"></div><div class="item blue type1 line71"></div><div class="item black type1 line71"></div><div class="item blue type2 line72"></div><div class="item yellow type1 line72"></div><div class="item magenta type1 line72"></div><div class="item magenta type1 line72"></div><div class="item magenta type2 line72"></div><div class="item white type1 line73"></div><div class="item black type2 line73"></div><div class="item blue type1 line73"></div><div class="item green type1 line73"></div><div class="item green type2 line73"></div><div class="item red type1 line74"></div><div class="item black type1 line74"></div><div class="item green type1 line74"></div><div class="item white type2 line74"></div><div class="item black type1 line75"></div><div class="item red type1 line75"></div><div class="item red type2 line75"></div><div class="item red type1 line75"></div><div class="item orange type2 line75"></div><div class="item black type2 line76"></div><div class="item white type1 line76"></div><div class="item red type1 line76"></div><div class="item red type1 line76"></div><div class="item orange type1 line77"></div><div class="item orange type2 line77"></div><div class="item blue type2 line77"></div><div class="item red type1 line77"></div><div class="item magenta type1 line77"></div><div class="item orange type2 line78"></div><div class="item magenta type1 line78"></div><div class="item orange type1 line78"></div><div class="item red type1 line78"></div><div class="item yellow type2 line78"></div><div class="item black type1 line79"></div><div class="item blue type2 line79"></div><div class="item black type2 line79"></div><div class="item red type1 line79"></div><div class="item orange type1 line79"></div>
 		</div>
 	</body>
 </html>
